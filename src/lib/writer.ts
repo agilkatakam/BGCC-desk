@@ -228,11 +228,11 @@ Field rules:
 - title: the internal idea name, ≤ 10 words.
 - angle: one sentence on the specific take that makes this post worth saving.
 - trendRelevance: 1–2 sentences on why this matters right now, citing the trigger event.
-- audienceRelevance: 1–2 sentences on why a student or aspiring consultant would care (interview prep, case comps, career signal).
+- audienceRelevance: 1–2 sentences on why it matters: mainly the takeaway for founders and business leaders who could become clients, then why students preparing for consulting would care.
 - hook: the opening line of the caption and the cover slide's promise, ≤ 16 words. hookVariants: 3 alternatives using different hook patterns.
 - slide titles are action titles (full-sentence takeaways). The cover kicker is a series label (e.g. "Guesstimate", "Case in Point", "Industry Lens").
 - closing: title is the takeaway; cta invites a comment, save or share and mentions BGCC.
-- caption (LinkedIn): 130–220 words. First line states the key number or tension. Short paragraphs with line breaks, a consultant's reasoning, what students should take from it, ends with a question. No hashtags or emoji inside.
+- caption (LinkedIn): 130–220 words. First line states the key number or tension. Short paragraphs with line breaks, a consultant's reasoning, the lesson a founder or manager should take from it, ends with a question. No hashtags or emoji inside.
 - captionInstagram (Instagram and other marketing): 50–100 words. A punchy first line, two or three short lines on why it matters, then "Save this for your next case" or similar, then a question. At most one emoji. No hashtags inside.
 - hashtags: 5–7, include #BGCC.
 - altText: ≤ 125 characters describing the cover slide.
@@ -484,7 +484,7 @@ export async function critique(cards: IdeaCard[], brand: BrandProfile, writerMod
     avoid: writerModel,
     schema: CRITIC_SCHEMA,
     temperature: 0.3,
-    system: `You are a senior member of ${brand.name} reviewing post ideas before they go to the design team. You are demanding but fair. You care about: originality (not a rehash of a headline), hook strength, factual risk (unsourced or shaky numbers), brand fit, and marketing pull: would a 19-year-old aspiring consultant save it, share it or follow the page because of it? The posts exist to grow the club's audience, so an accurate but forgettable idea is a "fix", not a "ship".`,
+    system: `You are a senior member of ${brand.name} reviewing post ideas before they go to the design team. You are demanding but fair. You care about: originality (not a rehash of a headline), hook strength, factual risk (unsourced or shaky numbers), brand fit, and marketing pull: would a founder or business leader (about 70% of the audience) find it sharp enough to think of hiring the club, and would a consulting-minded student (about 30%) save, share or follow because of it? The posts exist to grow the club's audience and win it projects, so an accurate but forgettable idea is a "fix", not a "ship".`,
     prompt: `Review each idea. Score 1–10. Verdict: "ship" (≥ 7.5, ready for design), "fix" (good idea, specific problems), or "kill" (not worth the team's time). Give 2–4 short, specific notes, and a betterHook if you can beat the current one.
 
 ${cards

@@ -35,7 +35,7 @@ export function IdeaCard({ card }: { card: Card }) {
         )}
         {card.audienceRelevance && (
           <>
-            <dt className="text-faint">For students</dt>
+            <dt className="text-faint">Audience</dt>
             <dd className="text-ink-2">{clean(card.audienceRelevance)}</dd>
           </>
         )}

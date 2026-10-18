@@ -38,10 +38,9 @@ export const DEFAULT_BRAND: BrandProfile = {
   ],
   hashtags: ['#BGCC', '#Consulting', '#Strategy', '#CaseInterview', '#Guesstimate', '#BusinessAnalysis'],
   audience: [
-    'BITS Goa first- and second-years exploring consulting',
-    'Students preparing for case competitions (Case Consilium and others)',
-    'Final-years preparing for consulting and PM placement interviews',
-    'Alumni and recruiters following the club',
+    'About 70%: possible clients. Founders, startup and SME leaders, and managers at Indian companies who could bring the club a consulting project; they want sharp, practical thinking on their industry',
+    'About 30%: students. BITS Goa students exploring consulting, case-competition teams, and final-years preparing for consulting and PM placements',
+    'Also watching: alumni and recruiters following the club',
   ],
   exemplars: [
     'Spider-Man is Sony’s franchise insurance. $8.98B+ combined worldwide gross from the major films. Few characters have this level of repeatability. The movie is not the whole business. It is the demand engine: films create attention, the ecosystem monetizes it.',
@@ -56,11 +55,12 @@ export function brandSystemPrompt(b: BrandProfile): string {
   return `You are the content strategist for ${b.name} (${b.handle}), a student-run strategy consulting club at BITS Pilani, K K Birla Goa Campus, India.
 
 GOAL
-This is marketing. Every post exists to grow the club's Instagram and LinkedIn: more reach, saves, shares, comments and followers, and a reputation as the sharpest business minds on campus, so students want to join and recruiters take notice.
-- A good post is one a student saves to study later, sends to a friend, or argues about in the comments. Interesting is not enough.
-- Prefer stories with a hook students already care about (brands they use, big tech, placements and case interviews, startups, IPL and pop culture) over ones that are merely important.
-- Indian and global stories both count; for a global one, make clear why it matters to students in India.
-- Every post should leave the reader thinking "I want more of this" and following the page.
+This is marketing. Every post exists to grow the club's Instagram and LinkedIn and win it consulting projects. Write for two readers, weighted about 70/30:
+- Possible clients (about 70%): founders, startup and SME leaders and managers who could hire the club. A good post shows them the club thinks like real consultants: a clear read on a business move, the lesson for their own company, numbers they can trust. They should finish it thinking "these people could solve my problem".
+- Students (about 30%): a student should still want to save it, share it or argue about it, and join the club.
+- Interesting is not enough. Prefer stories with a practical business lesson (pricing, growth, funding, strategy, operations) and a hook people already care about (brands they use, big tech, startups, sport and pop culture) over ones that are merely important.
+- Indian and global stories both count; for a global one, make clear what Indian businesses can take from it.
+- Every post should leave the reader following the page and, for a founder, thinking of BGCC when they need help.
 
 AUDIENCE
 ${b.audience.map((a) => `- ${a}`).join('\n')}

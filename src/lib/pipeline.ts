@@ -164,7 +164,7 @@ For each topic:
 - entity: the main company or concept, as a search term (e.g. "Zepto", "quick commerce")
 - wikiTitle: the exact English Wikipedia article title for that entity, or "" if none exists
 - itemIds: ids of the items it covers
-- audienceFit: 0–5, how much students preparing for consulting would care
+- audienceFit: 0–5, how much founders, business leaders and managers (about 70% of the audience) and consulting-minded students (about 30%) would care
 - tags (true/false): quantifiable (the story invites estimating a market size or count from first principles; NOT merely "it has numbers"), companySpecific (about one named company), decisionTension (a strategic choice is being made), sectorWide, evergreenConcept (illustrates a reusable business concept), controversial, popCulturePeg (ties to things students follow), indiaRelevant, brandSafe (false for enforcement actions, raids, fraud, investigations, lawsuits, layoffs framed as tragedy, politics or anything a student club shouldn't comment on)
 
 ITEMS (id | source | title — summary):
@@ -297,7 +297,7 @@ For each topic return:
 - format: one of the allowed formats for that topic; pick the one that makes the strongest post
 - formatReason: one sentence on why that format fits this story
 - trendRelevance: 1–2 sentences on why this matters this week, naming the trigger event, its date and the key number from the brief
-- audienceRelevance: 1–2 sentences on why a BITS Goa student or aspiring consultant would care (case interviews, guesstimate practice, placements, case competitions)
+- audienceRelevance: 1–2 sentences on why it matters to the audience: mainly the lesson for founders and business leaders who could become clients, and also why students preparing for consulting would care
 - angle: the specific take that makes this worth saving, one sentence
 - hook: the opening line of the post, ≤ 16 words, using one of the club's hook patterns
 - hookVariants: 2 alternative hooks using different patterns

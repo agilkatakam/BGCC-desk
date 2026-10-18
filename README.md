@@ -32,7 +32,7 @@ Runs entirely in the browser · free Gemini tier · bring your own key · no ser
 |---|---|
 | **Trend relevance** | The triggering event and its date. A momentum badge (Rising, Exploding) compares the last 3 days with the prior 2 weeks. |
 | **Content format** | A rule-based router picks guesstimate, case breakdown, framework, industry analysis, poll or short analysis, and says why. |
-| **Audience relevance** | Why BITSians and aspiring consultants would care. |
+| **Audience relevance** | Why it matters to the audience: about 70% possible clients (founders, business leaders) and 30% students. |
 | **Engagement potential** | A 0 to 100 score from five parts, each with its evidence: momentum (Wikipedia pageviews, Hacker News), discussion, source breadth, format track record and audience fit. A grade says how much is measured rather than assumed. |
 | **Execution complexity** | 1 to 5, with estimated hours and what is still needed. |
 | **Suggested hook** | Plus three alternatives and the reviewer's pick. |

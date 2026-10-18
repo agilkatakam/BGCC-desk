@@ -80,7 +80,7 @@ const META_SHAPE = {
       format: FORMAT_IDS.join(' | '),
       formatReason: 'one sentence: why this format fits',
       trendRelevance: 'why this matters this week, with the trigger and a number, citing [n]',
-      audienceRelevance: 'why a student or aspiring consultant would care',
+      audienceRelevance: 'why founders and business leaders (possible clients) and consulting students would care',
       angle: 'the specific take, one sentence',
       hook: 'opening line ≤ 16 words',
       complexity: '1–5',
@@ -246,7 +246,7 @@ List up to 3 follow-up Google searches that would fill the most important gaps: 
       temperature: 0.5,
       system: `${brandSystemPrompt(brand)}
 
-You are also the club's lead research analyst. You write sharp, rigorous research briefs for students who want to think like consultants: structured, numbers-first, honest about uncertainty.`,
+You are also the club's lead research analyst. You write sharp, rigorous research briefs for founders, business leaders and students who want to think like consultants: structured, numbers-first, honest about uncertainty.`,
       prompt: `Write a research brief answering: "${question}"
 
 FINDINGS (already cited with [n] numbers):
