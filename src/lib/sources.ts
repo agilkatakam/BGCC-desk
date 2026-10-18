@@ -14,6 +14,7 @@ export interface FeedDef {
   url: string
   family: SourceFamily
   direct?: boolean // sends CORS headers, so no relay needed
+  global?: boolean // world news rather than Indian; the scan keeps a balance of both
 }
 
 export const FEEDS: FeedDef[] = [
@@ -32,7 +33,17 @@ export const FEEDS: FeedDef[] = [
     family: 'news',
   },
   { id: 'gtrends', name: 'Google Trends · India', url: 'https://trends.google.com/trending/rss?geo=IN', family: 'search' },
+  // Global business news, so ideas come from the whole world and not just India.
+  { id: 'gnews-world', name: 'Google News · World business', url: 'https://news.google.com/rss/headlines/section/topic/BUSINESS?hl=en-US&gl=US&ceid=US:en', family: 'news', global: true },
+  { id: 'bbc', name: 'BBC Business', url: 'https://feeds.bbci.co.uk/news/business/rss.xml', family: 'business_press', global: true },
+  { id: 'cnbc', name: 'CNBC', url: 'https://search.cnbc.com/rs/search/combinedcms/view.xml?partnerId=wrss01&id=10001147', family: 'business_press', global: true },
+  { id: 'ft', name: 'Financial Times', url: 'https://www.ft.com/companies?format=rss', family: 'business_press', global: true },
+  { id: 'guardian', name: 'The Guardian · Business', url: 'https://www.theguardian.com/business/rss', family: 'business_press', global: true },
+  { id: 'techcrunch', name: 'TechCrunch', url: 'https://techcrunch.com/feed/', family: 'business_press', global: true },
 ]
+
+/** Sources whose stories count as global when the scan balances Indian and world news. */
+export const GLOBAL_SOURCES = new Set([...FEEDS.filter((f) => f.global).map((f) => f.name), 'Stratechery', 'McKinsey Insights', 'Hacker News'])
 
 export const relayUrl = (relay: string, url: string) => {
   const base = relay || (import.meta.env.DEV ? '/relay' : '')

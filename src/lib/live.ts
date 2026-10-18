@@ -63,7 +63,7 @@ export class LiveDesk {
 
   private registry: SourceRef[] = []
 
-  async start(registry: SourceRef[], voice = 'Kore') {
+  async start(registry: SourceRef[], history = '', voice = 'Charon') {
     this.registry = registry
     this.ev.onStatus('connecting')
     const [model] = await candidatesFor('live')
@@ -76,7 +76,9 @@ export class LiveDesk {
 
     const system = `${deskSystemPrompt('voice')}
 Before building a post, ask out loud which format and colour scheme they want (BGCC black is the club's own look), then call build_post.
-Start by greeting the user in one short sentence and offering today's ideas or research on anything.`
+${history
+  ? `This chat already has a conversation, below. Carry on from it: welcome them back in one short sentence and pick up where you left off, without repeating what was said.\n\nThe chat so far:\n${history}`
+  : "Start by greeting the user in one short sentence and offering today's ideas or research on anything."}`
     // ask_user is a chat widget; by voice the desk just asks.
     const tools = TOOL_DECLS.filter((t) => t.name !== 'ask_user')
     this.session = await ai.live.connect({

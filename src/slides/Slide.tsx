@@ -228,8 +228,13 @@ function Rule({ c, w = 96, my = 0 }: { c: Ctx; w?: number; my?: number }) {
 }
 
 const fmtNum = (v: number) => (Math.abs(v) >= 100 ? Math.round(v).toLocaleString('en-IN') : (Math.round(v * 10) / 10).toLocaleString('en-IN'))
+/** Puts a currency symbol before its number: the model sometimes writes "90 $B" or "52,878 ₹ crore". */
+export const tidyMoney = (s: string) => s.replace(/(\d[\d.,]*)\s*([₹$€£])(?!\s*\d)\s*([A-Za-z]{0,6})(?![A-Za-z])/g, (_m, n, sym, u) => `${sym}${n}${u ? (u.length <= 2 ? u : ` ${u}`) : ''}`)
+
 const withUnit = (v: number, unit?: string) => {
   if (!unit) return fmtNum(v)
+  const money = unit.match(/^([₹$€£])\s*(.*)$/)
+  if (money) return `${money[1]}${fmtNum(v)}${money[2] ? (money[2].length <= 2 ? money[2] : ` ${money[2]}`) : ''}`
   if (unit === '₹' || unit === '$') return `${unit}${fmtNum(v)}`
   if (unit === '%' || unit === '×' || unit === 'x') return `${fmtNum(v)}${unit}`
   return `${fmtNum(v)} ${unit}`
@@ -289,8 +294,8 @@ function Body({ slide, c }: { slide: SlideSpec; c: Ctx }) {
     case 'stat':
       return (
         <div style={center}>
-          <div style={{ fontFamily: look.num, fontWeight: look.numWeight, fontSize: z(fitLine(slide.value, c.style === 'bold' ? 220 : 190, 7)), lineHeight: 1, color: accent, letterSpacing: look.numTrack, whiteSpace: 'nowrap' }}>
-            {slide.value}
+          <div style={{ fontFamily: look.num, fontWeight: look.numWeight, fontSize: z(fitLine(tidyMoney(slide.value), c.style === 'bold' ? 220 : 190, 7)), lineHeight: 1, color: accent, letterSpacing: look.numTrack, whiteSpace: 'nowrap' }}>
+            {tidyMoney(slide.value)}
           </div>
           <p style={{ fontFamily: look.head, fontWeight: look.headWeight, fontSize: z(fit(slide.label, 50, 60)), lineHeight: 1.2, margin: `${z(44)}px 0 0`, letterSpacing: look.headTrack }}>{slide.label}</p>
           {slide.context && <p style={{ fontSize: z(fit(slide.context, 32, 160)), lineHeight: 1.5, color: muted, marginTop: z(30) }}>{slide.context}</p>}
@@ -411,7 +416,7 @@ function Body({ slide, c }: { slide: SlideSpec; c: Ctx }) {
           <div style={{ display: 'grid', gridTemplateColumns: `repeat(${cols}, 1fr)`, gap: z(28), marginTop: z(52) }}>
             {slide.items.map((it, i) => (
               <div key={i} style={{ background: c.style === 'minimal' ? 'transparent' : mix(paper, ink, 0.06), borderTop: c.style === 'minimal' ? `1.5px solid ${ink}33` : 'none', borderRadius: c.style === 'bold' ? 0 : c.style === 'minimal' ? 0 : 18, padding: c.style === 'minimal' ? `${z(28)}px 0 0` : `${z(36)}px ${z(36)}px` }}>
-                <div style={{ fontFamily: look.num, fontWeight: look.numWeight, fontSize: z(fitLine(it.value, valueSize, cols === 1 ? 7 : 6)), lineHeight: 1, color: accent, letterSpacing: look.numTrack, whiteSpace: 'nowrap' }}>{it.value}</div>
+                <div style={{ fontFamily: look.num, fontWeight: look.numWeight, fontSize: z(fitLine(tidyMoney(it.value), valueSize, cols === 1 ? 7 : 6)), lineHeight: 1, color: accent, letterSpacing: look.numTrack, whiteSpace: 'nowrap' }}>{tidyMoney(it.value)}</div>
                 <div style={{ fontSize: z(fit(it.label, 30, 50)), lineHeight: 1.35, marginTop: z(18), color: ink }}>{it.label}</div>
               </div>
             ))}
@@ -547,7 +552,7 @@ function Body({ slide, c }: { slide: SlideSpec; c: Ctx }) {
                   <div style={{ fontSize: z(34), fontWeight: 700, lineHeight: 1.2 }}>{it.name}</div>
                   {it.note && <div style={{ fontSize: z(fit(it.note, 24, 70)), color: muted, marginTop: 6, lineHeight: 1.35 }}>{it.note}</div>}
                 </div>
-                {it.value && <span style={{ fontFamily: look.num, fontWeight: look.numWeight, fontSize: z(38), color: i === 0 ? accent : ink, fontVariantNumeric: 'tabular-nums' }}>{it.value}</span>}
+                {it.value && <span style={{ fontFamily: look.num, fontWeight: look.numWeight, fontSize: z(38), color: i === 0 ? accent : ink, fontVariantNumeric: 'tabular-nums' }}>{tidyMoney(it.value)}</span>}
               </li>
             ))}
           </ol>

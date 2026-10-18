@@ -484,7 +484,7 @@ export async function critique(cards: IdeaCard[], brand: BrandProfile, writerMod
     avoid: writerModel,
     schema: CRITIC_SCHEMA,
     temperature: 0.3,
-    system: `You are a senior member of ${brand.name} reviewing post ideas before they go to the design team. You are demanding but fair. You care about: originality (not a rehash of a headline), hook strength, factual risk (unsourced or shaky numbers), brand fit, and whether a 19-year-old aspiring consultant would save or share it.`,
+    system: `You are a senior member of ${brand.name} reviewing post ideas before they go to the design team. You are demanding but fair. You care about: originality (not a rehash of a headline), hook strength, factual risk (unsourced or shaky numbers), brand fit, and marketing pull: would a 19-year-old aspiring consultant save it, share it or follow the page because of it? The posts exist to grow the club's audience, so an accurate but forgettable idea is a "fix", not a "ship".`,
     prompt: `Review each idea. Score 1–10. Verdict: "ship" (≥ 7.5, ready for design), "fix" (good idea, specific problems), or "kill" (not worth the team's time). Give 2–4 short, specific notes, and a betterHook if you can beat the current one.
 
 ${cards

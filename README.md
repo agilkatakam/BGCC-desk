@@ -17,7 +17,7 @@ Runs entirely in the browser · free Gemini tier · bring your own key · no ser
 
 | You ask | The desk does |
 |---|---|
-| **"3 ideas for today"** | Scans about 300 stories from 13 sources (Indian business press, Google News, Hacker News, Google Trends), groups them into stories, measures momentum and returns scored idea cards. |
+| **"3 ideas for today"** | Scans about 500 stories from about 20 sources, Indian and global (Economic Times, Mint, FT, BBC, CNBC, TechCrunch, Google News, Hacker News, Google Trends), groups them into stories, measures momentum and returns scored idea cards. |
 | **"What's happening with Zepto?"** | Deep research: 5 planned searches, a gap check, up to 3 follow-ups, then a cited brief and 3 post ideas. |
 | **"Build this"** | Researches again, writes the slides and both captions, finds real pictures, fact-checks every number, looks at the rendered slides and fixes what it finds, then a second model reviews it. |
 | **"Make slide 3 punchier"** | Revises the post in place. |
@@ -63,7 +63,7 @@ The editor edits every slide, chart, table, picture and caption, shows the fact 
 ```mermaid
 flowchart LR
   U[You or Clay] --> A[Chat agent<br/>tool loop]
-  A --> S[Scan<br/>13 sources]
+  A --> S[Scan<br/>~20 sources]
   A --> R[Deep research<br/>cited brief]
   A --> B[Build]
   S --> I[Idea cards<br/>with markers]
@@ -73,6 +73,7 @@ flowchart LR
 
 - **Browser only.** React 19, Vite, Tailwind and TypeScript. Keys, ideas and chats live in IndexedDB.
 - **Gemini free tier.** Each job uses the cheapest model that does it well (Flash-Lite for planning and vision, Flash for writing). A quota ledger tracks each model's daily limit and moves to the next model when one runs out.
+- **Built for marketing.** Every prompt starts from the same goal: grow BGCC's page. A good post is one students save, share or follow the club for, not just one that is accurate, and the reviewer scores that pull.
 - **Two models disagree on purpose.** The reviewer runs on a different model from the writer, so it doesn't approve its own work.
 - **Code over model wherever possible.** Format routing, engagement scores, number matching, guesstimate maths and layout measurement are all deterministic.
 - **Optional relay.** Indian news sites block browser requests, so a tiny Cloudflare Worker (`relay/worker.js`) forwards feeds. The dev server has one built in.

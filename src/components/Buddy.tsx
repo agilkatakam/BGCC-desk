@@ -41,6 +41,27 @@ function voiceThread() {
     return next
   }
   return {
+    /** The chat so far as plain text, so a new voice session picks up where the last one left off. */
+    history: () => {
+      const t = getState().threads.find((x) => x.id === id)
+      if (!t) return ''
+      const cards = getState().cards
+      const title = (cid?: string) => (cid && cards[cid] ? `${cards[cid].title} (idea ${cid})` : 'an idea')
+      const lines = t.messages.map((m) => {
+        const said = m.parts
+          .map((p) => {
+            if (p.type === 'text') return p.text?.trim() ?? ''
+            if (p.type === 'ideas') return `[idea cards: ${(p.cardIds ?? []).map(title).join('; ')}]`
+            if (p.type === 'deck') return `[built slides for ${title(p.cardId)}]`
+            if (p.type === 'research') return `[research brief on: ${p.research?.question ?? ''}]`
+            return ''
+          })
+          .filter(Boolean)
+          .join(' ')
+        return said && `${m.role === 'user' ? 'User' : 'Desk'}: ${said}`
+      })
+      return lines.filter(Boolean).join('\n').slice(-8000)
+    },
     sources: () => getState().threads.find((x) => x.id === id)?.sources ?? [],
     saveSources: (sources: ChatThread['sources']) => {
       const t = getState().threads.find((x) => x.id === ensure())
@@ -121,7 +142,7 @@ export function Buddy() {
     })
     desk.current = d
     try {
-      await d.start(registry)
+      await d.start(registry, vt.history())
     } catch (e) {
       setStatus('error')
       setDetail((e as Error).message)

@@ -322,7 +322,7 @@ WHAT TO DO
 ${
   mode === 'chat'
     ? '- Write tight markdown: short paragraphs, bullets for lists, bold for key numbers. No filler, no emoji.\n- Messages may start with [Composer settings …]; follow them: a fixed format means skip the format question, a fixed style and colour scheme means skip the look question; if only one is fixed, still ask the look question.'
-    : '- You are speaking aloud as Clay, the desk\'s voice: a yellow hexagon in a little top hat and bowtie with a butler\'s manners, warm and quietly witty. Introduce yourself as Clay if asked. Keep turns short (2–4 sentences), conversational, no lists or markdown. Ask one question at a time. Tell the user that cards and slides appear in the chat.'
+    : '- You are speaking aloud as Clay, the desk\'s voice: a yellow hexagon in a little top hat and bowtie with a butler\'s manners, warm and quietly witty. Speak like a sophisticated English gentleman: a calm, low, unhurried voice with crisp, refined diction. Introduce yourself as Clay if asked. Keep turns short (2–4 sentences), conversational, no lists or markdown. Ask one question at a time. Tell the user that cards and slides appear in the chat.'
 }`
 }
 
@@ -369,6 +369,21 @@ function unchosen(args: any, prefs: Prefs, contents: any[]) {
   return ''
 }
 
+const DEFER = /\b(your (call|choice|pick|recommendation)|you (choose|decide|pick)|recommended|whatever|any(thing)? (is )?fine|go ahead|up to you|default|surprise me)\b/i
+
+/**
+ * The user typed instead of tapping an option. Treat it as the answer, and when they hand the choice back
+ * ("your recommendation", "you pick"), answer with the recommended option so the question isn't asked again.
+ */
+function typedAnswer(args: any, text: string) {
+  const options: string[] = Array.isArray(args?.options) ? args.options : []
+  const rec = options.find((o) => /recommended/i.test(o)) ?? options[0]
+  const note = 'This answers your question. Do not ask it again; carry on, and treat anything else in the message as instructions for the next steps.'
+  if (args?.kind === 'look' && DEFER.test(text)) return { answer: text, chosen: 'BGCC black, Editorial style unless the message names another', note }
+  if (rec && DEFER.test(text) && !options.some((o) => text.toLowerCase().includes(o.replace(/\s*\(recommended\)/i, '').toLowerCase()))) return { answer: text, chosen: rec.replace(/\s*\(recommended\)/i, ''), note }
+  return { answer: text, note }
+}
+
 export async function chatTurn(opts: {
   history: any[]
   text: string
@@ -387,7 +402,7 @@ export async function chatTurn(opts: {
       role: 'user',
       parts: [
         ...pending.map((fc) => ({
-          functionResponse: { name: fc.name, ...(fc.id ? { id: fc.id } : {}), response: fc.name === 'ask_user' ? { answer: opts.text } : { skipped: 'The user replied before this ran.' } },
+          functionResponse: { name: fc.name, ...(fc.id ? { id: fc.id } : {}), response: fc.name === 'ask_user' ? typedAnswer(fc.args, opts.text) : { skipped: 'The user replied before this ran.' } },
         })),
         ...userParts(opts.text, opts.files, opts.prefs).slice(pending.some((fc) => fc.name === 'ask_user') ? 1 : 0),
       ],

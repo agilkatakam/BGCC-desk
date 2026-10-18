@@ -7,6 +7,7 @@ const ALLOWED = [
   'www.livemint.com', 'www.business-standard.com',
   'www.thehindubusinessline.com', 'www.thehindu.com', 'inc42.com', 'yourstory.com',
   'www.producthunt.com', 'stratechery.com', 'hnrss.org',
+  'feeds.bbci.co.uk', 'search.cnbc.com', 'www.ft.com', 'www.theguardian.com', 'techcrunch.com',
 ]
 const PICTURE_TYPES = /^(text\/html|image\/)/
 

@@ -1,7 +1,7 @@
 import { brandSystemPrompt } from './brand'
 import { generate } from './gemini'
 import { FORMATS, FORMAT_IDS, HOURS_BY_COMPLEXITY, computeSignals, growthRatio, routeFormat, scoreTopic } from './scoring'
-import { FEEDS, SWEEPS, fetchFeed, fetchHackerNews, groundedSweep, hnSeries, wikiSeries } from './sources'
+import { FEEDS, GLOBAL_SOURCES, SWEEPS, fetchFeed, fetchHackerNews, groundedSweep, hnSeries, wikiSeries } from './sources'
 import { getState } from './store'
 import type { FormatId, IdeaCard, ProgressStep, RawItem, ScanRun, Topic, TopicTags } from './types'
 import { researchBrief, uid } from './writer'
@@ -145,14 +145,17 @@ async function scanTopics(focus: string | undefined, set: ReturnType<typeof trac
 
   // 2. Cluster + tag. Keep the prompt inside Gemma's 16K tokens/minute.
   set('cluster', 'running')
-  const ranked = [...run.items].sort((a, b) => weight(b) - weight(a)).slice(0, 140)
+  // Keep a balance of Indian and world stories: up to 60 global, the rest Indian, so neither crowds out the other.
+  const byWeight = [...run.items].sort((a, b) => weight(b) - weight(a))
+  const world = byWeight.filter((i) => GLOBAL_SOURCES.has(i.source)).slice(0, 60)
+  const ranked = [...world, ...byWeight.filter((i) => !GLOBAL_SOURCES.has(i.source)).slice(0, 140 - world.length)]
   const lines = ranked.map((i) => `${i.id} | ${i.source} | ${i.title}${i.summary ? ` — ${i.summary.slice(0, 110)}` : ''}`)
   const cl = await generate({
     role: 'scout',
     schema: CLUSTER_SCHEMA,
     temperature: 0.2,
-    system: 'You are a research analyst for a student consulting club in India. You group news into business topics and tag each one precisely.',
-    prompt: `Group these items into 10–14 business TOPICS that a consulting club could post about. Each topic must be ONE specific story: a named company, deal, launch, result, policy or number (e.g. "Fairfax buys 60.7% of IDBI Bank", "Zepto files DRHP for ₹11,000 crore IPO"). Never a broad theme like "FMCG performance" or "AI adoption". Merge items only when they cover the same story. Drop sport results, politics, crime, disasters, celebrity news and anything a student consulting club should not comment on.
+    system: 'You are a research analyst for a student consulting club in India that follows both Indian and global business. You group news into business topics and tag each one precisely.',
+    prompt: `Group these items into 10–14 business TOPICS that a consulting club could post about. Each topic must be ONE specific story: a named company, deal, launch, result, policy or number (e.g. "Fairfax buys 60.7% of IDBI Bank", "Zepto files DRHP for ₹11,000 crore IPO"). Never a broad theme like "FMCG performance" or "AI adoption". Merge items only when they cover the same story. Give a mix of Indian and global stories (roughly half each), picking the global ones Indian students would still care about: brands they use, big tech, famous companies, deals that shape careers. Drop sport results, politics, crime, disasters, celebrity news and anything a student consulting club should not comment on.
 ${focus ? `\nThe editor wants topics about: ${focus}. Rank those first, but keep other strong topics too.\n` : ''}
 For each topic:
 - label: short headline (≤ 9 words)
