@@ -86,7 +86,7 @@ npm install
 npm run dev        # http://localhost:5173
 ```
 
-Open Settings, paste a free key from [Google AI Studio](https://aistudio.google.com/apikey), and ask for ideas. `npm run build` makes a static site you can host anywhere. For a hosted build, deploy `relay/worker.js` to Cloudflare Workers and paste its URL in Settings.
+You need a free Gemini API key; nothing else costs money. Open Settings, paste a free key from [Google AI Studio](https://aistudio.google.com/apikey), and ask for ideas. `npm run build` makes a static site you can host anywhere. For a hosted build, deploy `relay/worker.js` to Cloudflare Workers and paste its URL in Settings.
 
 <details>
 <summary><b>Code map</b></summary>
