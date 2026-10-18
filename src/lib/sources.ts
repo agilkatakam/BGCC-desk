@@ -46,7 +46,7 @@ export const FEEDS: FeedDef[] = [
 export const GLOBAL_SOURCES = new Set([...FEEDS.filter((f) => f.global).map((f) => f.name), 'Stratechery', 'McKinsey Insights', 'Hacker News'])
 
 export const relayUrl = (relay: string, url: string) => {
-  const base = relay || (import.meta.env.DEV ? '/relay' : '')
+  const base = relay || (import.meta.env.DEV ? '/relay' : '/api/relay')
   return base ? `${base}${base.includes('?') ? '&' : '?'}url=${encodeURIComponent(url)}` : ''
 }
 
