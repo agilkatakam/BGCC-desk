@@ -10,6 +10,7 @@ import { HomeView } from './views/HomeView'
 import { IdeasView } from './views/IdeasView'
 import { SettingsView } from './views/SettingsView'
 import { StudioView } from './views/StudioView'
+import { WelcomeView } from './views/WelcomeView'
 
 function Nav({ on, onClick, icon, children, title }: { on?: boolean; onClick: () => void; icon: React.ReactNode; children?: React.ReactNode; title?: string }) {
   return (
@@ -33,15 +34,11 @@ export default function App() {
   const { view, setView, openThread, hydrated, apiKey } = useStore()
 
   useEffect(() => {
-    if (hydrated && !apiKey && view === 'home') setView('settings')
-    // only on first load
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [hydrated])
-  useEffect(() => {
     window.scrollTo(0, 0)
   }, [view])
 
   if (!hydrated) return null
+  if (!apiKey) return <WelcomeView />
   const go = (v: View) => setView(v)
 
   return (
