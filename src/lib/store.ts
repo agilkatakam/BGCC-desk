@@ -123,6 +123,8 @@ export const useStore = create<State>()(
       onRehydrateStorage: () => (state) => {
         if (state) {
           if (!state.prefs.style) state.prefs = { ...state.prefs, style: 'ask' }
+          // A newer built-in voice replaces an older one.
+          if ((state.brand.updatedAt ?? '') < DEFAULT_BRAND.updatedAt) state.brand = { ...DEFAULT_BRAND }
           setApiKey(state.apiKey)
           setLimitOverrides(state.settings.limits)
         }

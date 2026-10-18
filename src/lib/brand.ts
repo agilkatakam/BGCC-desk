@@ -1,36 +1,40 @@
 import type { BrandProfile, IdeaCard, Palette, PaletteId, StyleId } from './types'
 
-// Seeded from BGCC's public LinkedIn/Instagram/Threads presence (research/02, Oct 2026).
+// Learned from BGCC's own carousels (Spider-Man/Sony, AI token pricing, Saudi football), Oct 2026.
 // Refine it in Settings → Brand by pasting captions or uploading post screenshots.
 export const DEFAULT_BRAND: BrandProfile = {
   name: 'BITS Goa Consulting Club',
   handle: '@bgcc.bitsgoa',
   voice: [
-    'Curious: opens with a question the reader has already wondered about',
-    'Educational without lecturing: explains the mechanics, then the “so what”',
-    'Numbers-first: leads with a concrete figure whenever one exists',
-    'Pop-culture aware: pegs business ideas to things students already follow (Shark Tank India, IPL, quick commerce apps)',
-    'Confident and concise: consulting tone, no hype words',
+    'Thesis-first: the cover states a sharp, slightly provocative claim (“Building God. Billing by the token.”), not a topic',
+    'Reframes the obvious: shows the real business under the visible one (“The movie is not the whole business. It is the demand engine.”)',
+    'Short declarative punches: two- to six-word sentences, often in pairs, landing like a verdict',
+    'Numbers as evidence: one big figure per point with a plain one-line caption of what it means ($8.98B+, $51B, ~€422M)',
+    'Pop-culture and sport as the doorway: Spider-Man, Ronaldo and Saudi football, AI pricing; global stories students already follow',
+    'Confident, a little cheeky, never hypey: talks to the reader like a sharp senior, not a press release',
   ],
   dos: [
-    'Use action titles: every slide headline is a full-sentence takeaway',
-    'Show the structure (MECE trees, 2×2s, step flows), not just the conclusion',
-    'Cite the source and date of every external number',
-    'End with a question or prompt that invites comments',
+    'Open every carousel with a bold thesis cover; number the slides as a story (setup, mechanism, proof, takeaway)',
+    'Give each slide a punchy section title (THE SETUP, COLLAPSE PROOF, TOKEN ECONOMICS) plus one clear takeaway line',
+    'Explain the mechanism visually: flow loops (Films → Attention → Games/Merch → More demand), side-by-side “X brings / Y brings” boxes, ranked comparisons',
+    'Pair big stat callouts with one-line captions; compare against a familiar benchmark (Premier League wage bills, La Liga)',
+    'Close each slide or the deck on a verdict line (“That’s the point.”, “Control + collaboration = asymmetric upside.”, “How you prompt matters.”)',
+    'Use ~ for approximate figures and cite the source and date of every external number in the caption',
     'Keep slides scannable: at most ~35 words of body text per slide',
   ],
   donts: [
     'No emoji walls, no “🚀 Exciting news!” openers',
     'No buzzwords: synergy, game-changer, revolutionise, unlock, delve',
-    'No politics, religion, tragedies or ongoing litigation',
+    'No long paragraphs on slides; if it needs a paragraph it belongs in the caption',
+    'No politics, religion, tragedies or ongoing litigation (a business angle on a state-owned club is fine; no political commentary)',
     'Never present a guess as a fact; label assumptions as assumptions',
   ],
   hookPatterns: [
-    'Ever wondered how …? (rhetorical question)',
-    'A surprising number up front: “₹X crore in Y days.”',
-    'Contrarian: “Everyone thinks X. The numbers say Y.”',
+    'Paradox cover: “Building God. Billing by the token.”',
+    'Hidden business: “X is not a Y. It is a Z.” (“Spider-Man is Sony’s franchise insurance.”)',
+    'They didn’t buy A, they bought B: “They didn’t buy a striker. They bought worldwide attention.”',
+    'A surprising number up front: “$950B fund. Four football clubs.”',
     'Interview framing: “If this came up in your case interview, how would you size it?”',
-    'Pop-culture peg: “What the Sharks didn’t tell you about …”',
   ],
   hashtags: ['#BGCC', '#Consulting', '#Strategy', '#CaseInterview', '#Guesstimate', '#BusinessAnalysis'],
   audience: [
@@ -40,10 +44,12 @@ export const DEFAULT_BRAND: BrandProfile = {
     'Alumni and recruiters following the club',
   ],
   exemplars: [
-    'Ever wondered how investors on Shark Tank value companies? Or how startups reach unicorn status? Swipe through our overview of startup valuations.',
+    'Spider-Man is Sony’s franchise insurance. $8.98B+ combined worldwide gross from the major films. Few characters have this level of repeatability. The movie is not the whole business. It is the demand engine: films create attention, the ecosystem monetizes it.',
+    'They didn’t buy a striker. They bought worldwide attention, new broadcast markets and credibility for the league. No football club generates enough revenue to justify these numbers. That’s the point.',
+    'Building God. Billing by the token. LLM inference costs have fallen roughly 1,000x in three years, yet the bill keeps rising. How you prompt matters.',
   ],
   palette: { ink: '#0A0A0A', accent: '#F5C518', paper: '#FFFFFF', muted: '#6B7280', allDark: true },
-  updatedAt: '2026-10-14',
+  updatedAt: '2026-10-18',
 }
 
 export function brandSystemPrompt(b: BrandProfile): string {
