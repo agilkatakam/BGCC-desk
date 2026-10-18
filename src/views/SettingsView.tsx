@@ -78,6 +78,28 @@ function KeySection() {
         </>
       }
     >
+      {!apiKey && (
+        <ol className="mb-4 space-y-2 rounded-[14px] bg-warn-soft px-4 py-3.5 text-[14px] leading-snug">
+          <li className="font-medium">First time here? Two minutes and it's free:</li>
+          {[
+            <>
+              Open{' '}
+              <a href="https://aistudio.google.com/apikey" target="_blank" rel="noreferrer" className="font-medium underline underline-offset-2">
+                Google AI Studio
+              </a>{' '}
+              and sign in with any Google account.
+            </>,
+            <>Click "Create API key", then copy the key (it starts with AIza).</>,
+            <>Paste it below and press "Verify and save". It stays in this browser.</>,
+            <>On the home screen, tap "3 ideas for today", or talk to Clay in the corner.</>,
+          ].map((step, i) => (
+            <li key={i} className="flex gap-2.5">
+              <span className="grid size-5 shrink-0 place-items-center rounded-full bg-ink text-[11.5px] font-semibold text-white">{i + 1}</span>
+              <span>{step}</span>
+            </li>
+          ))}
+        </ol>
+      )}
       <div className="flex gap-2">
         <div className="relative flex-1">
           <Input type={show ? 'text' : 'password'} value={draft} onChange={(e) => setDraft(e.target.value)} placeholder="AIza…" className="pr-10" onKeyDown={(e) => e.key === 'Enter' && draft.trim() && save()} />
