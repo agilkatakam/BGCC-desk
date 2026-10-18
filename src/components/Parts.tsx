@@ -225,7 +225,7 @@ function Deck({ cardId }: { cardId: string }) {
       </div>
       <button onClick={() => openStudio(card.id)} className="mt-3.5 flex w-full gap-2 overflow-x-auto pb-1 scroll-thin" title="Open the editor">
         {card.slides.map((_, i) => (
-          <div key={i} className="overflow-hidden rounded-[6px] ring-hair">
+          <div key={i} className="shrink-0 overflow-hidden rounded-[6px] ring-hair">
             <CardSlide card={card} index={i} scale={0.118} />
           </div>
         ))}
