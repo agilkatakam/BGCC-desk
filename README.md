@@ -73,7 +73,7 @@ flowchart LR
 
 - **Browser only.** React 19, Vite, Tailwind and TypeScript. Keys, ideas and chats live in IndexedDB.
 - **Gemini free tier.** Each job uses the cheapest model that does it well (Flash-Lite for planning and vision, Flash for writing). A quota ledger tracks each model's daily limit and moves to the next model when one runs out.
-- **Built for marketing.** Every prompt starts from the same goal: grow BGCC's page. A good post is one students save, share or follow the club for, not just one that is accurate, and the reviewer scores that pull.
+- **Built for marketing.** Every prompt starts from the same goal: grow BGCC's page and win it projects. About 70% of readers are possible clients (founders, business leaders) and 30% are students, so a good post makes a founder think of hiring the club and a student save or share it, not just one that is accurate. The reviewer scores that pull.
 - **Two models disagree on purpose.** The reviewer runs on a different model from the writer, so it doesn't approve its own work.
 - **Code over model wherever possible.** Format routing, engagement scores, number matching, guesstimate maths and layout measurement are all deterministic.
 - **Optional relay.** Indian news sites block browser requests, so a tiny Cloudflare Worker (`relay/worker.js`) forwards feeds. The dev server has one built in.
